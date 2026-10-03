@@ -1,0 +1,102 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    text-align: center;
+    background: #111;
+    color: white;
+    font-family: sans-serif;
+  }
+  button {
+    font-size: 22px;
+    padding: 12px 24px;
+    background: #6c5ce7;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    margin: 12px;
+    transition: transform 0.1s;
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+  input {
+    font-size: 22px;
+    padding: 8px;
+    width: 80px;
+    margin: 12px;
+  }
+  h1, #out, #reste, #hist {
+    margin: 12px;
+  }
+  #out {
+    font-size: 20px;
+    min-height: 40px;
+  }
+</style>
+
+<h1>Devine le nombre</h1>
+<p>Entre 1 et 10</p>
+<form id="f">
+  <input id="n" type="number" />
+  <button id="btn" type="submit">Valider</button>
+</form>
+<button id="rejouer">Nouvelle partie</button>
+<p id="out"></p>
+<p id="reste">5 essais</p>
+<p id="hist"></p>
+
+<script>
+  let SECRET = Math.floor(Math.random() * 10) + 1;
+  let essais = 0;
+  let fini = false;
+
+  function comparer(essai, secret) {
+    if (essai < secret) return "plus";
+    if (essai > secret) return "moins";
+    return "gagné";
+  }
+
+  function jouer(essai) {
+    return comparer(essai, SECRET);
+  }
+
+  function message(essai) {
+    if (fini) return "Le jeu est fini";
+    essais = essais + 1;
+    document.getElementById("reste").textContent = (5 - essais) + " restant(s)";
+    if (essais > 5) {
+      fini = true;
+      return "Tu pue le caca";
+    }
+    const r = jouer(essai);
+    if (r === "plus") return "Trop guez c'est plus (" + essais + ")";
+    if (r === "moins") return "Sale zgeg c'est moins (" + essais + ")";
+    fini = true;
+    return "Oui la bête en " + essais + " essai(s)";
+  }
+
+  document.getElementById("f").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (document.getElementById("n").value === "") return;
+    const essai = Number(document.getElementById("n").value);
+    document.getElementById("out").textContent = message(essai);
+    document.getElementById("hist").textContent += essai + " ";
+    if (fini) {
+      document.getElementById("reste").textContent = "secret = " + SECRET;
+      document.getElementById("out").style.color = essais > 5 ? "#e74c3c" : "#2ecc71";
+      document.getElementById("btn").disabled = true;
+    }
+  });
+
+  document.getElementById("rejouer").addEventListener("click", function () {
+    SECRET = Math.floor(Math.random() * 10) + 1;
+    essais = 0;
+    fini = false;
+    document.getElementById("out").textContent = "Nouvelle partie";
+    document.getElementById("out").style.color = "white";
+    document.getElementById("n").value = "";
+    document.getElementById("reste").textContent = "5 essais";
+    document.getElementById("hist").textContent = "";
+    document.getElementById("btn").disabled = false;
+  });
+</script>
