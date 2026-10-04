@@ -108,5 +108,8 @@ if (record) document.getElementById("record").textContent = "record : " + record
     document.getElementById("hist").textContent = "";
     document.getElementById("btn").disabled = false;
     document.getElementById("n").focus();
+    localStorage.removeItem("record");
+record = null;
+document.getElementById("record").textContent = "";
   });
 </script>
