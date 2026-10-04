@@ -113,8 +113,6 @@ return "Oui louloute en " + essais + " essai(s)";
     document.getElementById("hist").textContent = "";
     document.getElementById("btn").disabled = false;
     document.getElementById("n").focus();
-    localStorage.removeItem("record");
-record = null;
-document.getElementById("record").textContent = "";
+    if (record) document.getElementById("record").textContent = "record : " + record;
   });
 </script>
