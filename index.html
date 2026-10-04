@@ -80,7 +80,12 @@ if (record) document.getElementById("record").textContent = "record : " + record
     if (r === "plus") return "t'abuse frro c'est plus (" + essais + ")";
     if (r === "moins") return "Sale paf c'est moins (" + essais + ")";
     fini = true;
-    return "Oui louloute en " + essais + " essai(s)";
+if (record === null || Number(record) === 0 || essais < Number(record)) {
+  record = String(essais);
+  localStorage.setItem("record", record);
+  document.getElementById("record").textContent = "record : " + record;
+}
+return "Oui louloute en " + essais + " essai(s)";
   }
 
   document.getElementById("f").addEventListener("submit", function (e) {
