@@ -94,22 +94,7 @@ return "Oui louloute en " + essais + " essai(s)";
     const essai = Number(document.getElementById("n").value);
      if (essai < 1 || essai > 10) return;
     document.getElementById("out").textContent = message(essai);
-    Étape 10 — Affichage simple des résultats
-À la fin du script, affiche un résumé clair et lisible dans le terminal, sans graphiques complexes :Nombre total de trades
-Win rate (en %)
-Profit factor
-Gain total (en %)
-Drawdown maximum (en %)
-Meilleure fenêtre (3, 5 ou 10) selon le win rate et le profit factor
-
-Présente ça sous forme de tableau texte simple, par exemple :
-
-Fenêtre | Trades | Win rate | Profit factor | Gain total | Max DD
-5       | 42     | 57.1 %   | 1.68          | +18.4 %    | -6.2 %
-
-Puis indique en une phrase laquelle des trois fenêtres est la meilleure.
-
-
+    
     document.getElementById("hist").textContent += essai + " ";
     if (fini) {
       document.getElementById("reste").textContent = "secret = " + SECRET;
