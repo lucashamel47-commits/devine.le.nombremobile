@@ -94,6 +94,8 @@ return "Oui louloute en " + essais + " essai(s)";
     const essai = Number(document.getElementById("n").value);
      if (essai < 1 || essai > 10) return;
     document.getElementById("out").textContent = message(essai);
+    document.getElementById("n").value = "";
+document.getElementById("n").focus();
     
     document.getElementById("hist").textContent += essai + " ";
     if (fini) {
