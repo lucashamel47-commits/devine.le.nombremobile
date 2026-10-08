@@ -9,3 +9,4 @@ merged = demande acceptée, main a changé.
 pull = je récupère main.
 
 Ordre : branche, commit, push, PR, merged.
+Créer notes-git.md : +11 -0
