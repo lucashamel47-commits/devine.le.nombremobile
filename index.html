@@ -3,13 +3,13 @@
   body {
     text-align: center;
     background: #111;
-    color: crimson;
+    color: white;
     font-family: sans-serif;
   }
   button {
     font-size: 22px;
     padding: 12px 24px;
-    background: crimson;
+    background: #6c5ce7;
     color: white;
     border: none;
     border-radius: 12px;
@@ -25,36 +25,38 @@
     width: 80px;
     margin: 12px;
   }
-  h1, #out, #reste, #hist {
+  h1, #out, #reste, #hist, #record {
     margin: 12px;
   }
   #out {
     font-size: 20px;
     min-height: 40px;
-    <button id="facile">Facile</button>
-<button id="moyen">Moyen</button>
-<button id="difficile">Difficile</button>
   }
 </style>
 
 <h1>Devine le nombre</h1>
 <p>Entre 1 et 10</p>
+<button id="facile">Facile</button>
+<button id="moyen">Moyen</button>
+<button id="difficile">Difficile</button>
 <form id="f">
-  <input id="n" type="number" min="1" max="10"placeholder="?" />
+  <input id="n" type="number" min="1" max="10" placeholder="?" />
   <button id="btn" type="submit">Valider</button>
 </form>
 <button id="rejouer">Nouvelle partie</button>
 <p id="out"></p>
 <p id="reste">5 essais</p>
-<p id="hist"></p>
+<p id="hist">Essais : </p>
 <p id="record"></p>
 
 <script>
-  let SECRET = Math.floor(Math.random() * 10) + 1;
+  let max = 10;
+  let maxEssais = 5;
+  let SECRET = Math.floor(Math.random() * max) + 1;
   let essais = 0;
   let fini = false;
   let record = localStorage.getItem("record");
-if (record) document.getElementById("record").textContent = "record : " + record;
+  if (record) document.getElementById("record").textContent = "record : " + record;
 
   function comparer(essai, secret) {
     if (essai < secret) return "plus";
@@ -68,67 +70,74 @@ if (record) document.getElementById("record").textContent = "record : " + record
 
   function message(essai) {
     if (fini) return "Le jeu est fini";
-    if (essais <= 5 && (record === null || essais < Number(record))) {
-  record = String(essais);
-  localStorage.setItem("record", record);
-  document.getElementById("record").textContent = "record : " + record;
-}
     essais = essais + 1;
-    document.getElementById("reste").textContent = (5 - essais) + " restant(s)";
-    if (essais > 5) {
+    document.getElementById("reste").textContent = (maxEssais - essais) + " restant(s)";
+    if (essais > maxEssais) {
       fini = true;
-      return "A oe le niveau pfou";
+      return "Tu pue le caca";
     }
     const r = jouer(essai);
-    if (r === "plus") return "t'es nul  frro c'est plus (" + essais + ")";
-    if (r === "moins") return "t'es fou ou quoi  c'est moins (" + essais + ")";
+    if (r === "plus") return "Trop guez c'est plus (" + essais + ")";
+    if (r === "moins") return "Sale zgeg c'est moins (" + essais + ")";
     fini = true;
-if (record === null || Number(record) === 0 || essais < Number(record)) {
-  record = String(essais);
-  localStorage.setItem("record", record);
-  document.getElementById("record").textContent = "record : " + record;
-}
-return "Oui le boss en " + essais + " essai(s)";
+    if (record === null || Number(record) === 0 || essais < Number(record)) {
+      record = String(essais);
+      localStorage.setItem("record", record);
+      document.getElementById("record").textContent = "record : " + record;
+    }
+    return "Oui la bête en " + essais + " essai(s)";
+  }
+
+  function niveau(m, e, nom) {
+    max = m;
+    maxEssais = e;
+    SECRET = Math.floor(Math.random() * max) + 1;
+    essais = 0;
+    fini = false;
+    document.getElementById("n").max = max;
+    document.getElementById("out").textContent = nom;
+    document.getElementById("reste").textContent = maxEssais + " essais";
+    document.getElementById("hist").textContent = "Essais : ";
+    document.getElementById("btn").disabled = false;
+    document.getElementById("out").style.color = "white";
   }
 
   document.getElementById("f").addEventListener("submit", function (e) {
     e.preventDefault();
     if (document.getElementById("n").value === "") return;
     const essai = Number(document.getElementById("n").value);
-     if (essai < 1 || essai > 10) return;
+    if (essai < 1 || essai > max) return;
     document.getElementById("out").textContent = message(essai);
+    document.getElementById("hist").textContent += essai + " ";
     document.getElementById("n").value = "";
-document.getElementById("n").focus();
-    
-    document.getElementById("hist").textContent += essai + " Essais ";
+    document.getElementById("n").focus();
     if (fini) {
       document.getElementById("reste").textContent = "secret = " + SECRET;
-      document.getElementById("out").style.color = essais > 5 ? "#e74c3c" : "#2ecc71";
+      document.getElementById("out").style.color = essais > maxEssais ? "#e74c3c" : "#2ecc71";
       document.getElementById("btn").disabled = true;
     }
   });
 
   document.getElementById("rejouer").addEventListener("click", function () {
-    SECRET = Math.floor(Math.random() * 10) + 1;
+    SECRET = Math.floor(Math.random() * max) + 1;
     essais = 0;
     fini = false;
     document.getElementById("out").textContent = "Nouvelle partie";
     document.getElementById("out").style.color = "white";
     document.getElementById("n").value = "";
-    document.getElementById("reste").textContent = "5 essais";
-    document.getElementById("hist").textContent = "";
+    document.getElementById("reste").textContent = maxEssais + " essais";
+    document.getElementById("hist").textContent = "Essais : ";
     document.getElementById("btn").disabled = false;
-    document.getElementById("n").focus();
     if (record) document.getElementById("record").textContent = "record : " + record;
   });
- document.getElementById("facile").addEventListener("click", function () {
-  document.getElementById("out").textContent = "Facile";
-});
-document.getElementById("moyen").addEventListener("click", function () {
-  document.getElementById("out").textContent = "Moyen";
-});
-document.getElementById("difficile").addEventListener("click", function () {
-  document.getElementById("out").textContent = "Difficile";
-});
-});
+
+  document.getElementById("facile").addEventListener("click", function () {
+    niveau(10, 5, "Facile : 1 à 10");
+  });
+  document.getElementById("moyen").addEventListener("click", function () {
+    niveau(20, 7, "Moyen : 1 à 20");
+  });
+  document.getElementById("difficile").addEventListener("click", function () {
+    niveau(50, 10, "Difficile : 1 à 50");
+  });
 </script>
