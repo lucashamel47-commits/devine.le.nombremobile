@@ -77,15 +77,15 @@
       return "Tu pue le caca";
     }
     const r = jouer(essai);
-    if (r === "plus") return "Trop guez c'est plus (" + essais + ")";
-    if (r === "moins") return "Sale zgeg c'est moins (" + essais + ")";
+    if (r === "plus") return "T'en fais expres c'est plus (" + essais + ")";
+    if (r === "moins") return "A oe le niveau c'est moins (" + essais + ")";
     fini = true;
     if (record === null || Number(record) === 0 || essais < Number(record)) {
       record = String(essais);
       localStorage.setItem("record", record);
       document.getElementById("record").textContent = "record : " + record;
     }
-    return "Oui la bête en " + essais + " essai(s)";
+    return "Suuuuui en " + essais + " essai(s)";
   }
 
   function niveau(m, e, nom) {
