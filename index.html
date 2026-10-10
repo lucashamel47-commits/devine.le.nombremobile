@@ -31,6 +31,9 @@
   #out {
     font-size: 20px;
     min-height: 40px;
+    <button id="facile">Facile</button>
+<button id="moyen">Moyen</button>
+<button id="difficile">Difficile</button>
   }
 </style>
 
@@ -118,4 +121,14 @@ document.getElementById("n").focus();
     document.getElementById("n").focus();
     if (record) document.getElementById("record").textContent = "record : " + record;
   });
+ document.getElementById("facile").addEventListener("click", function () {
+  document.getElementById("out").textContent = "Facile";
+});
+document.getElementById("moyen").addEventListener("click", function () {
+  document.getElementById("out").textContent = "Moyen";
+});
+document.getElementById("difficile").addEventListener("click", function () {
+  document.getElementById("out").textContent = "Difficile";
+});
+});
 </script>
