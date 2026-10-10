@@ -36,9 +36,11 @@
 
 <h1>Devine le nombre</h1>
 <p>Entre 1 et 10</p>
-<button id="facile">Facile</button>
-<button id="moyen">Moyen</button>
-<button id="difficile">Difficile</button>
+<select id="niveau">
+  <option value="facile">Facile</option>
+  <option value="moyen">Moyen</option>
+  <option value="difficile">Difficile</option>
+</select>
 <form id="f">
   <input id="n" type="number" min="1" max="10" placeholder="?" />
   <button id="btn" type="submit">Valider</button>
@@ -130,14 +132,11 @@
     document.getElementById("btn").disabled = false;
     if (record) document.getElementById("record").textContent = "record : " + record;
   });
-
-  document.getElementById("facile").addEventListener("click", function () {
-    niveau(10, 5, "Facile : 1 à 10");
-  });
-  document.getElementById("moyen").addEventListener("click", function () {
-    niveau(20, 7, "Moyen : 1 à 20");
-  });
-  document.getElementById("difficile").addEventListener("click", function () {
-    niveau(50, 10, "Difficile : 1 à 50");
+document.getElementById("niveau").addEventListener("change", function () {
+  const v = document.getElementById("niveau").value;
+  if (v === "facile") niveau(10, 5, "Facile : 1 à 10");
+  if (v === "moyen") niveau(20, 7, "Moyen : 1 à 20");
+  if (v === "difficile") niveau(50, 10, "Difficile : 1 à 50");
+});
   });
 </script>
